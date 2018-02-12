@@ -1,22 +1,35 @@
 #!/bin/bash
-set -e
-
-#查看mysql服务的状态，方便调试，这条语句可以删除
-echo `service mysql status`
-
-echo '1.启动mysql....'
-#启动mysql
-service mysql start
-sleep 3
-echo `service mysql status`
-
-echo '2.开始导入数据....'
-#导入数据
-mysql < /mysql/logcreateTable.sql
-echo '3.导入数据完毕....'
-
-#sleep 3
-echo `service mysql status`
-echo 'mysql容器启动完毕,且数据导入成功'
-
-tail -f /dev/null
+##############################
+# @file create_db_mysql.sh
+# @brief create database and tables in mysql
+# @author ZhaoJian
+# @version 0.1
+# @date 2018-02-12
+##############################
+USER="root"
+DATABASE="log"
+TABLE="tms_log_total"
+######################
+#crate database
+mysql -u $USER << EOF 2>/dev/null
+CREATE DATABASE $DATABASE
+EOF
+[ $? -eq 0 ] && echo "created DB" || echo DB already exists
+######################
+#create table
+mysql -u $USER $DATABASE << EOF 2>/dev/null
+pid INT PRIMARY KEY AUTO_INCREMENT,  
+  level VARCHAR(16),  
+  time DATETIME,
+  uid VARCHAR(100),
+  url VARCHAR(250),
+  userAgent VARCHAR(250),
+  msgs VARCHAR(400)
+);
+EOF
+[ $? -eq 0 ] && echo "Created table tms_log_total" || echo "Table tms_log_total already exist" 
+######################
+#delete data
+mysql -u $USER $DATABASE << EOF 2>/dev/null
+DELETE FROM $TABLE;
+EOF
