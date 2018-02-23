@@ -2,10 +2,11 @@ SET NAMES UTF8;
 DROP DATABASE IF EXISTS log;
 CREATE DATABASE log CHARSET=UTF8;
 USE log;
+
 /**ccp日志表**/
 CREATE TABLE ccp_log_total(
-  pid INT PRIMARY KEY AUTO_INCREMENT,  
-  level VARCHAR(16),  
+  pid INT PRIMARY KEY AUTO_INCREMENT,
+  level VARCHAR(16),
   time DATETIME,
   uid VARCHAR(100),
   url VARCHAR(250),
@@ -14,8 +15,8 @@ CREATE TABLE ccp_log_total(
 );
 /**tms日志表**/
 CREATE TABLE tms_log_total(
-  pid INT PRIMARY KEY AUTO_INCREMENT,  
-  level VARCHAR(16),  
+  pid INT PRIMARY KEY AUTO_INCREMENT,
+  level VARCHAR(16),
   time DATETIME,
   uid VARCHAR(100),
   url VARCHAR(250),
@@ -25,8 +26,8 @@ CREATE TABLE tms_log_total(
 
 /**csp日志表**/
 CREATE TABLE csp_log_total(
-  pid INT PRIMARY KEY AUTO_INCREMENT,  
-  level VARCHAR(16),  
+  pid INT PRIMARY KEY AUTO_INCREMENT,
+  level VARCHAR(16),
   time DATETIME,
   uid VARCHAR(100),
   url VARCHAR(250),
