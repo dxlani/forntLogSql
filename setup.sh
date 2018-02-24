@@ -6,7 +6,7 @@
 # @version 0.1
 # @date 2018-02-12
 ##############################
-mysql -u* -h* -p* <<EOF  
+mysql -uroot  -ppassword <<EOF
     SET NAMES UTF8;
 DROP DATABASE IF EXISTS log;
 CREATE DATABASE log CHARSET=UTF8;
