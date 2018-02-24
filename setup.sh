@@ -6,32 +6,43 @@
 # @version 0.1
 # @date 2018-02-12
 ##############################
-set -e
+mysql -u* -h* -p* <<EOF  
+    SET NAMES UTF8;
+DROP DATABASE IF EXISTS log;
+CREATE DATABASE log CHARSET=UTF8;
+USE log;
 
-#查看mysql服务的状态，方便调试，这条语句可以删除
-echo `service mysql status`
+/**ccp日志表**/
+CREATE TABLE ccp_log_total(
+  pid INT PRIMARY KEY AUTO_INCREMENT,
+  level VARCHAR(16),
+  time DATETIME,
+  uid VARCHAR(100),
+  url VARCHAR(250),
+  userAgent VARCHAR(250),
+  msgs VARCHAR(400)
+);
+/**tms日志表**/
+CREATE TABLE tms_log_total(
+  pid INT PRIMARY KEY AUTO_INCREMENT,
+  level VARCHAR(16),
+  time DATETIME,
+  uid VARCHAR(100),
+  url VARCHAR(250),
+  userAgent VARCHAR(250),
+  msgs VARCHAR(400)
+);
 
-echo '1.启动mysql....'
-#启动mysql
-service mysql start
-sleep 3
-echo `service mysql status`
+/**csp日志表**/
+CREATE TABLE csp_log_total(
+  pid INT PRIMARY KEY AUTO_INCREMENT,
+  level VARCHAR(16),
+  time DATETIME,
+  uid VARCHAR(100),
+  url VARCHAR(250),
+  userAgent VARCHAR(250),
+  msgs VARCHAR(400)
+);
 
-echo '2.开始导入数据....'
-#导入数据
-mysql < /mysql/schema.sql
-echo '3.导入数据完毕....'
-
-sleep 3
-echo `service mysql status`
-
-#重新设置mysql密码
-echo '4.开始修改密码....'
-mysql < /mysql/privileges.sql
-echo '5.修改密码完毕....'
-
-#sleep 3
-echo `service mysql status`
-echo `mysql容器启动完毕,且数据导入成功`
-
-tail -f /dev/null
+ 
+EOF  
