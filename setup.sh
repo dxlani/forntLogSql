@@ -6,14 +6,14 @@
 # @version 0.1
 # @date 2018-02-12
 ##############################
-# mysql -uroot  -ppassword <<EOF
+mysql -uroot  -ppassword <<EOF
 #!/usr/sh
 HOSTNAME="localhost"                                           #数据库信息
 PORT="3306"
 USERNAME="root"
 PASSWORD=""
 
-    SET NAMES UTF8;
+SET NAMES UTF8;
 DROP DATABASE IF EXISTS log;
 CREATE DATABASE log CHARSET=UTF8;
 USE log;
@@ -51,4 +51,4 @@ CREATE TABLE csp_log_total(
 );
 
  
-# EOF  
+EOF  
